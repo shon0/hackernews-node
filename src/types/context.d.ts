@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
 
 export type Context = {
-  prisma: typeof PrismaClient
+  prisma: PrismaClient
 }
