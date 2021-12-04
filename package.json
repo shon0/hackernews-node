@@ -8,26 +8,30 @@
     "start": "node dist/index.js",
     "fix:eslint": "eslint --fix 'src/**/*.{js,ts}'",
     "fix:prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
-    "lint": "yarn fix:eslint && yarn fix:prettier"
+    "lint": "yarn fix:eslint && yarn fix:prettier",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^3.6.0",
+    "apollo-server": "^3.5.0",
+    "graphql": "^16.0.1"
+  },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.3.0",
+    "@graphql-codegen/typescript": "^2.4.1",
+    "@graphql-codegen/typescript-resolvers": "^2.4.2",
     "@types/node": "^16.11.11",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.5.0",
     "prisma": "^3.6.0",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.2"
-  },
-  "dependencies": {
-    "@prisma/client": "^3.6.0",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.5.0",
-    "apollo-server": "^3.5.0",
-    "eslint": "^8.3.0",
-    "eslint-config-prettier": "^8.3.0",
-    "graphql": "^16.0.1"
   }
 }
