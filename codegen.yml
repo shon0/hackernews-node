@@ -6,6 +6,8 @@ generates:
       userIndexSignature: true
       contextType: ../context#Context
       enumsAsTypes: true
+      mappers:
+        User: '@prisma/client/index.d#User'
     plugins:
       - typescript
       - typescript-resolvers
