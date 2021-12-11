@@ -25,7 +25,9 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "graphql": "^16.1.0",
-    "jsonwebtoken": "^8.5.1"
+    "graphql-subscriptions": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "subscriptions-transport-ws": "^0.11.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.3.0",
