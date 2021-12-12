@@ -57,10 +57,20 @@ export type MutationSignupArgs = {
   password: Scalars['String'];
 };
 
+export type NewLink = {
+  __typename?: 'NewLink';
+  id?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   feed: Array<Link>;
   info: Scalars['String'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  newLink: NewLink;
 };
 
 export type User = {
@@ -145,8 +155,10 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Link: ResolverTypeWrapper<Omit<Link, 'postedBy'> & { postedBy?: Maybe<ResolversTypes['User']> }>;
   Mutation: ResolverTypeWrapper<{}>;
+  NewLink: ResolverTypeWrapper<NewLink>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Subscription: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -157,8 +169,10 @@ export type ResolversParentTypes = {
   ID: Scalars['ID'];
   Link: Omit<Link, 'postedBy'> & { postedBy?: Maybe<ResolversParentTypes['User']> };
   Mutation: {};
+  NewLink: NewLink;
   Query: {};
   String: Scalars['String'];
+  Subscription: {};
   User: User;
 };
 
@@ -182,9 +196,18 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   signup?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<MutationSignupArgs, 'email' | 'name' | 'password'>>;
 };
 
+export type NewLinkResolvers<ContextType = Context, ParentType extends ResolversParentTypes['NewLink'] = ResolversParentTypes['NewLink']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   feed?: Resolver<Array<ResolversTypes['Link']>, ParentType, ContextType>;
   info?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
+
+export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+  newLink?: SubscriptionResolver<ResolversTypes['NewLink'], "newLink", ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -199,7 +222,9 @@ export type Resolvers<ContextType = Context> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   Link?: LinkResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  NewLink?: NewLinkResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

@@ -26,20 +26,23 @@ const login: MutationResolvers['login'] = async (_parent, args, context) => {
 const post: MutationResolvers['post'] = async (_parent, args, context) => {
   const { userId } = context
 
-  if(!userId) throw new Error("Not authenticated");
-  
+  if (!userId) throw new Error('Not authenticated')
 
-  return await context.prisma.link.create({
+  const newLink = await context.prisma.link.create({
     data: {
       url: args.url,
       description: args.description,
       postedBy: { connect: { id: userId } },
     },
   })
+
+  context.pubsub.publish('NEW_LINK', { newLink: { id: newLink.id } })
+
+  return newLink
 }
 
 export const Mutation: MutationResolvers = {
   signup,
   login,
-  post
+  post,
 }
