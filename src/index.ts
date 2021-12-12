@@ -13,50 +13,42 @@ import { PrismaClient } from '@prisma/client'
 import { getUserId } from './utils'
 import { resolvers } from './resolvers'
 
+const PORT = 4000
+
 const startServer = async () => {
   const app = express()
   const httpServer = http.createServer(app)
 
-  const schema = loadSchemaSync(join(__dirname, './schema.graphql'), {
+  const loadedSchema = loadSchemaSync(join(__dirname, './schema.graphql'), {
     loaders: [new GraphQLFileLoader()],
   })
-  const schemaWithResolvers = addResolversToSchema({ schema, resolvers })
-
-  const subscriptionServer = SubscriptionServer.create(
-    { schema, execute, subscribe },
-    { server: httpServer, path: '/graphql' },
-  )
+  const schema = addResolversToSchema({ schema: loadedSchema, resolvers })
 
   const prisma = new PrismaClient()
   const pubsub = new PubSub()
 
   const server = new ApolloServer({
-    schema: schemaWithResolvers,
+    schema,
     context: ({ req }) => ({
       ...req,
       prisma,
       pubsub,
       userId: req && req.headers.authorization ? getUserId(req) : null,
     }),
-    plugins: [
-      ApolloServerPluginDrainHttpServer({ httpServer }),
-      {
-        serverWillStart: async () => {
-          return {
-            drainServer: async () => {
-              subscriptionServer.close()
-            },
-          }
-        },
-      },
-    ],
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   })
 
   await server.start()
   server.applyMiddleware({ app })
 
-  await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve))
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  SubscriptionServer.create(
+    { schema, execute, subscribe },
+    { server: httpServer, path: server.graphqlPath },
+  )
+
+  httpServer.listen(PORT, () => {
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  })
 }
 
 startServer()
