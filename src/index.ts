@@ -42,7 +42,14 @@ const startServer = async () => {
   server.applyMiddleware({ app })
 
   SubscriptionServer.create(
-    { schema, execute, subscribe },
+    {
+      schema,
+      execute,
+      subscribe,
+      onConnect: () => {
+        return { pubsub }
+      },
+    },
     { server: httpServer, path: server.graphqlPath },
   )
 
