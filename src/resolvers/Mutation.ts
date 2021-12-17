@@ -34,9 +34,14 @@ const post: MutationResolvers['post'] = async (_parent, args, context) => {
       description: args.description,
       postedBy: { connect: { id: userId } },
     },
+    include: {
+      postedBy: true,
+    },
   })
 
-  context.pubsub.publish('NEW_LINK', { newLink: { id: newLink.id } })
+  console.log(newLink)
+
+  context.pubsub.publish('NEW_LINK', { newLink })
 
   return newLink
 }

@@ -46,9 +46,7 @@ const startServer = async () => {
       schema,
       execute,
       subscribe,
-      onConnect: () => {
-        return { pubsub }
-      },
+      onConnect: () => ({ pubsub }),
     },
     { server: httpServer, path: server.graphqlPath },
   )

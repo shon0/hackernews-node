@@ -10,11 +10,7 @@ type Mutation {
 }
 
 type Subscription {
-  newLink: NewLink!
-}
-
-type NewLink {
-  id: String
+  newLink: Link
 }
 
 type Link {
