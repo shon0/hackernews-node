@@ -5,6 +5,7 @@ import { Mutation } from './Mutation'
 import { Subscription } from './Subscription'
 import { User } from './User'
 import { Link } from './Link'
+import { Vote } from './Vote'
 
 export const resolvers: Resolvers = {
   Query,
@@ -12,4 +13,5 @@ export const resolvers: Resolvers = {
   Subscription,
   User,
   Link,
+  Vote,
 }

@@ -5,5 +5,5 @@ const feed: QueryResolvers['feed'] = async (_parent, _args, context) => {
 }
 
 export const Query: QueryResolvers = {
-  feed
+  feed,
 }

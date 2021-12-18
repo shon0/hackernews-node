@@ -39,15 +39,46 @@ const post: MutationResolvers['post'] = async (_parent, args, context) => {
     },
   })
 
-  console.log(newLink)
-
   context.pubsub.publish('NEW_LINK', { newLink })
 
-  return newLink
+  return { ...newLink }
+}
+
+const vote: MutationResolvers['vote'] = async (_parent, args, context) => {
+  const userId = context.userId
+  
+  if (!userId) {
+    throw new Error(`Authentication error`)
+  }
+
+  const vote = await context.prisma.vote.findUnique({
+    where: {
+      linkId_userId: {
+        linkId: args.linkId,
+        userId: userId || '',
+      },
+    },
+  })
+
+  if (vote) {
+    throw new Error(`Already voted for link: ${args.linkId}`)
+  }
+
+  const newVote = context.prisma.vote.create({
+    data: {
+      user: { connect: { id: userId } },
+      link: { connect: { id: args.linkId } },
+    },
+  })
+
+  context.pubsub.publish("NEW_VOTE", newVote)
+
+  return newVote
 }
 
 export const Mutation: MutationResolvers = {
   signup,
   login,
   post,
+  vote
 }

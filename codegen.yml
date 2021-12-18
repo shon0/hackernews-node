@@ -8,6 +8,8 @@ generates:
       enumsAsTypes: true
       mappers:
         User: '@prisma/client/index.d#User'
+        Link: '@prisma/client/index.d#Link'
+        Vote: '@prisma/client/index.d#Vote'
     plugins:
       - typescript
       - typescript-resolvers
