@@ -73,6 +73,7 @@ export type Query = {
 export type Subscription = {
   __typename?: 'Subscription';
   newLink?: Maybe<Link>;
+  newVote?: Maybe<Vote>;
 };
 
 export type User = {
@@ -214,6 +215,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 
 export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   newLink?: SubscriptionResolver<Maybe<ResolversTypes['Link']>, "newLink", ParentType, ContextType>;
+  newVote?: SubscriptionResolver<Maybe<ResolversTypes['Vote']>, "newVote", ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
