@@ -70,6 +70,11 @@ export type Query = {
   info: Scalars['String'];
 };
 
+
+export type QueryFeedArgs = {
+  filter?: InputMaybe<Scalars['String']>;
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   newLink?: Maybe<Link>;
@@ -209,7 +214,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  feed?: Resolver<Array<ResolversTypes['Link']>, ParentType, ContextType>;
+  feed?: Resolver<Array<ResolversTypes['Link']>, ParentType, ContextType, RequireFields<QueryFeedArgs, never>>;
   info?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
