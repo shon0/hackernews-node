@@ -19,7 +19,6 @@
     "@graphql-tools/load": "^7.4.1",
     "@graphql-tools/schema": "^8.3.1",
     "@prisma/client": "^3.6.0",
-    "apollo-server": "^3.5.0",
     "apollo-server-core": "^3.5.0",
     "apollo-server-express": "^3.5.0",
     "bcryptjs": "^2.4.3",
