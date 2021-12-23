@@ -9,6 +9,13 @@ const feed: QueryResolvers['feed'] = async (_parent, args, context) => {
       : {},
     skip: args.skip ?? undefined,
     take: args.take ?? undefined,
+    orderBy: args.orderBy
+      ? {
+          description: args.orderBy.description ?? undefined,
+          url: args.orderBy.url ?? undefined,
+          createdAt: args.orderBy.createdAt ?? undefined,
+        }
+      : {},
   })
 }
 

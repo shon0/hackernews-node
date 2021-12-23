@@ -32,6 +32,12 @@ export type Link = {
   votes: Array<Vote>;
 };
 
+export type LinkOrderByInput = {
+  createdAt?: InputMaybe<Sort>;
+  description?: InputMaybe<Sort>;
+  url?: InputMaybe<Sort>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   login?: Maybe<AuthPayload>;
@@ -73,9 +79,14 @@ export type Query = {
 
 export type QueryFeedArgs = {
   filter?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<LinkOrderByInput>;
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
 };
+
+export type Sort =
+  | 'asc'
+  | 'desc';
 
 export type Subscription = {
   __typename?: 'Subscription';
@@ -172,8 +183,10 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Link: ResolverTypeWrapper<Link>;
+  LinkOrderByInput: LinkOrderByInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  Sort: Sort;
   String: ResolverTypeWrapper<Scalars['String']>;
   Subscription: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
@@ -187,6 +200,7 @@ export type ResolversParentTypes = {
   ID: Scalars['ID'];
   Int: Scalars['Int'];
   Link: Link;
+  LinkOrderByInput: LinkOrderByInput;
   Mutation: {};
   Query: {};
   String: Scalars['String'];
