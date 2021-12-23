@@ -1,7 +1,7 @@
 import { QueryResolvers } from '../types/generated/graphql'
 
 const feed: QueryResolvers['feed'] = async (_parent, args, context) => {
-  return context.prisma.link.findMany({
+  const links = await context.prisma.link.findMany({
     where: args.filter
       ? {
           OR: [{ description: { contains: args.filter } }, { url: { contains: args.filter } }],
@@ -17,6 +17,10 @@ const feed: QueryResolvers['feed'] = async (_parent, args, context) => {
         }
       : {},
   })
+
+  const count = await context.prisma.link.count()
+
+  return { links, count }
 }
 
 export const Query: QueryResolvers = {

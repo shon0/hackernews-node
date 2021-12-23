@@ -23,6 +23,12 @@ export type AuthPayload = {
   user?: Maybe<User>;
 };
 
+export type Feed = {
+  __typename?: 'Feed';
+  count: Scalars['Int'];
+  links: Array<Link>;
+};
+
 export type Link = {
   __typename?: 'Link';
   description: Scalars['String'];
@@ -72,7 +78,7 @@ export type MutationVoteArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  feed: Array<Link>;
+  feed: Feed;
   info: Scalars['String'];
 };
 
@@ -180,6 +186,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   AuthPayload: ResolverTypeWrapper<Omit<AuthPayload, 'user'> & { user?: Maybe<ResolversTypes['User']> }>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Feed: ResolverTypeWrapper<Omit<Feed, 'links'> & { links: Array<ResolversTypes['Link']> }>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Link: ResolverTypeWrapper<Link>;
@@ -197,6 +204,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AuthPayload: Omit<AuthPayload, 'user'> & { user?: Maybe<ResolversParentTypes['User']> };
   Boolean: Scalars['Boolean'];
+  Feed: Omit<Feed, 'links'> & { links: Array<ResolversParentTypes['Link']> };
   ID: Scalars['ID'];
   Int: Scalars['Int'];
   Link: Link;
@@ -212,6 +220,12 @@ export type ResolversParentTypes = {
 export type AuthPayloadResolvers<ContextType = Context, ParentType extends ResolversParentTypes['AuthPayload'] = ResolversParentTypes['AuthPayload']> = {
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FeedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Feed'] = ResolversParentTypes['Feed']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  links?: Resolver<Array<ResolversTypes['Link']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -232,7 +246,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  feed?: Resolver<Array<ResolversTypes['Link']>, ParentType, ContextType, RequireFields<QueryFeedArgs, never>>;
+  feed?: Resolver<ResolversTypes['Feed'], ParentType, ContextType, RequireFields<QueryFeedArgs, never>>;
   info?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
@@ -258,6 +272,7 @@ export type VoteResolvers<ContextType = Context, ParentType extends ResolversPar
 
 export type Resolvers<ContextType = Context> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
+  Feed?: FeedResolvers<ContextType>;
   Link?: LinkResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
