@@ -7,6 +7,8 @@ const feed: QueryResolvers['feed'] = async (_parent, args, context) => {
           OR: [{ description: { contains: args.filter } }, { url: { contains: args.filter } }],
         }
       : {},
+    skip: args.skip ?? undefined,
+    take: args.take ?? undefined,
   })
 }
 
